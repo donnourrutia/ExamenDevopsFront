@@ -8,6 +8,7 @@ Proyecto correspondiente a la interfaz web utilizada para operar la plataforma l
 * Visualización del estado de despachos.
 * Gestión de procesos logísticos.
 * Comunicación con los servicios backend mediante API REST.
+* Escalamiento automático de réplicas mediante Kubernetes Horizontal Pod Autoscaler (HPA).
 
 ## 🧰 Tecnologías Utilizadas
 
@@ -16,7 +17,9 @@ Proyecto correspondiente a la interfaz web utilizada para operar la plataforma l
 * Node.js
 * Docker
 * Kubernetes
-* AWS
+* Amazon EKS
+* Amazon ECR
+* Horizontal Pod Autoscaler (HPA)
 
 ## 🚀 Configuración del Entorno
 
@@ -56,9 +59,24 @@ npm run dev
 
 ## 🌍 Despliegue en la Nube
 
-La aplicación se empaqueta como una imagen Docker y se ejecuta sobre Amazon EKS.
+La aplicación se empaqueta como una imagen Docker y se despliega en un clúster de **Amazon EKS**.
 
-El acceso de los usuarios se realiza mediante un balanceador de carga configurado en Kubernetes, permitiendo distribuir el tráfico hacia las réplicas disponibles de la aplicación.
+El acceso de los usuarios se realiza mediante un **LoadBalancer** de Kubernetes, encargado de distribuir el tráfico entre las distintas réplicas disponibles del frontend.
+
+El almacenamiento de imágenes Docker se realiza en **Amazon ECR**, desde donde Kubernetes obtiene la versión más reciente para su despliegue.
+
+## 📈 Escalamiento Automático
+
+La aplicación utiliza **Horizontal Pod Autoscaler (HPA)** para adaptar automáticamente la cantidad de réplicas del Deployment según la carga del sistema.
+
+El HPA monitorea el consumo de recursos del clúster y, cuando la utilización de CPU supera el umbral configurado, incrementa el número de Pods disponibles. Cuando la demanda disminuye, reduce las réplicas de manera automática para optimizar el uso de recursos.
+
+Esta estrategia permite:
+
+- Mejorar la disponibilidad del servicio.
+- Distribuir la carga entre múltiples Pods.
+- Optimizar el consumo de recursos del clúster.
+- Mantener un rendimiento estable durante períodos de alta demanda.
 
 ## 🔄 Flujo de Entrega Continua
 
@@ -71,6 +89,7 @@ Cada actualización enviada a la rama principal activa automáticamente un pipel
 3. Creación de la imagen Docker.
 4. Publicación de la imagen en Amazon ECR.
 5. Actualización automática del Deployment en Kubernetes.
+6. Mantenimiento del escalamiento automático mediante Horizontal Pod Autoscaler.
 
 La configuración sensible utilizada durante el proceso se administra mediante GitHub Secrets, manteniendo protegidas las credenciales de acceso a los servicios de AWS.
 
