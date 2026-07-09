@@ -23,7 +23,7 @@ export const TableDespachos = () => {
   useEffect(() => {
     despacho();
   }, []);
-
+ 
   const [openModal, setOpenModal] = useState(false);
   const [despachoSeleccionado, setDespachoSeleccionado] = useState(null);
 
