@@ -31,7 +31,7 @@ export const TableDespachos = () => {
     setDespachoSeleccionado(despacho);
     setOpenModal(true);
   };
-
+ 
   return (
     <>
       <section className="grid text-center grid-cols-12 mb-8">
