@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "./Modal";
 import { FormCierreDespacho } from "./FormCierreDespacho";
-
+ 
 export const TableDespachos = () => {
   const [despachos, setDespachos] = useState([]);
 
